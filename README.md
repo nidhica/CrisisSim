@@ -1,314 +1,373 @@
-# 🚨 CrisisSim
+# CrisisSim
 
-## AI-Assisted Multi-Hazard Emergency Simulation & Decision Support
+## AI-Assisted Multi-Hazard Emergency Simulation & Decision Support Platform
 
-CrisisSim is a location-aware emergency simulation and decision-support platform that connects **citizen crisis reporting** with **authority assessment, deterministic multi-hazard simulation, bottleneck detection, and response strategy comparison**.
+CrisisSim is an AI-assisted emergency simulation and decision-support platform designed to help authorities explore emergency response strategies before acting on them.
 
-### Supported Hazards
+It connects citizen-reported incidents with an authority command center and a deterministic multi-hazard simulation engine. Authorities can assess incidents, simulate response strategies, compare interventions, and understand potential bottlenecks.
 
-🌊 Flood · 🔥 Fire · 🏚️ Earthquake · 🌀 Cyclone · ☣️ Industrial Accident
+CrisisSim currently supports:
 
-> ⚠️ **Prototype Disclaimer:** CrisisSim uses real-world geography but simulated emergency conditions, resources, facilities, risk zones, and response outcomes. It is not a production emergency-management system or real-time disaster intelligence platform.
+- Flood
+- Fire
+- Earthquake
+- Cyclone / Severe Storm
+- Industrial Accident
 
----
-
-# 🎯 Problem
-
-During an emergency, receiving a citizen report is only the beginning.
-
-Emergency personnel may need to understand:
-
-- Where the incident is located
-- What type of hazard is involved
-- How severe the situation may be
-- Which areas have higher simulated risk
-- Where response bottlenecks may occur
-- How resources could be allocated
-- How different response strategies compare
-
-Traditional incident reporting primarily records **what happened**.
-
-CrisisSim extends the workflow from:
-
-**Report → Assess → Simulate → Analyze → Compare → Decide**
+> **Important:** CrisisSim is a simulation and decision-support prototype. It is not a live emergency control system and does not provide real-time disaster intelligence, verified emergency boundaries, or operational instructions.
 
 ---
 
-# 💡 Solution
+# 1. Problem
 
-CrisisSim connects citizens and emergency personnel through a unified workflow:
+During emergencies, responders may need to make decisions while dealing with:
+
+- Limited emergency resources
+- Multiple affected zones
+- Different levels of risk
+- Road accessibility constraints
+- Medical urgency
+- Specialist resource requirements
+- Response-time bottlenecks
+- Uncertainty about the consequences of different interventions
+
+A simple dashboard showing incident information is not enough.
+
+CrisisSim explores a different approach:
+
+> **What happens if we simulate the response before committing resources?**
+
+The platform allows an authority to move from an incident report to a simulated response strategy and compare the projected outcome against a baseline.
+
+---
+
+# 2. What CrisisSim Does
+
+CrisisSim provides an end-to-end prototype workflow:
 
 ```text
-Citizen Report
-      |
-      v
-Authority Assessment
-      |
-      v
-Location-Aware Simulation
-      |
-      v
-Risk & Bottleneck Analysis
-      |
-      v
-What-If Strategy Comparison
-      |
-      v
-Projected Impact
-      |
-      v
-Decision Support
+Citizen
+   |
+   v
+Report Crisis
+   |
+   v
+Authority Command Center
+   |
+   v
+Acknowledge / Assess
+   |
+   v
+Simulate Response
+   |
+   v
+Multi-Hazard Simulation Engine
+   |
+   +----------------------+
+   |                      |
+   v                      v
+Risk Analysis       Bottleneck Detection
+   |                      |
+   +----------+-----------+
+              |
+              v
+       Intervention Engine
+              |
+              v
+       Response Recommendation
+              |
+              v
+      Command Dashboard
 ````
 
----
+The system combines:
 
-# 🛠️ Technology Stack
-
-## Frontend
-
-| Technology    | Purpose                                |
-| ------------- | -------------------------------------- |
-| React 18      | User interface                         |
-| TypeScript    | Type-safe frontend development         |
-| Vite          | Frontend development and build tooling |
-| React-Leaflet | Interactive maps                       |
-| Leaflet       | Map rendering                          |
-| Axios         | API communication                      |
-| CSS           | UI styling                             |
-
-## Backend
-
-| Technology         | Purpose                       |
-| ------------------ | ----------------------------- |
-| Python             | Backend and simulation engine |
-| FastAPI            | Local development API         |
-| AWS Lambda         | Serverless backend execution  |
-| Amazon API Gateway | REST API layer                |
-
-## Simulation & Decision Engine
-
-| Component            | Purpose                                   |
-| -------------------- | ----------------------------------------- |
-| Risk Scorer          | Calculates simulated zone risk            |
-| Response Time Engine | Estimates simulated response time         |
-| Bottleneck Detector  | Identifies simulated resource constraints |
-| Intervention Engine  | Applies response strategies               |
-| Evaluator            | Compares simulation outcomes              |
-| Recommender          | Produces strategy recommendations         |
-
-## Data & Storage
-
-| Technology      | Purpose                                    |
-| --------------- | ------------------------------------------ |
-| Amazon DynamoDB | Scenario and simulation-result persistence |
-| In-memory Store | Local development persistence              |
-
-## AI
-
-| Technology             | Purpose                                                     |
-| ---------------------- | ----------------------------------------------------------- |
-| Amazon Bedrock         | Optional natural-language explanation of simulation results |
-| Deterministic Fallback | Explanation when Bedrock is unavailable                     |
-
-## Maps & Location
-
-| Technology    | Purpose                       |
-| ------------- | ----------------------------- |
-| OpenStreetMap | Map tiles                     |
-| Nominatim     | Location search and geocoding |
-
-## Development & Testing
-
-| Technology | Purpose                          |
-| ---------- | -------------------------------- |
-| Git        | Version control                  |
-| GitHub     | Source repository                |
-| Pytest     | Backend testing                  |
-| Vitest     | Frontend testing                 |
-| Kiro       | Specification-driven development |
+* Citizen crisis reporting
+* Authority incident management
+* Location-aware simulation
+* Multi-hazard risk scoring
+* Resource allocation analysis
+* Bottleneck detection
+* What-If intervention analysis
+* Projected impact comparison
+* Optional AI-generated explanations
+* Deterministic fallback explanations
 
 ---
 
-# ☁️ AWS Services Used
+# 3. Supported Hazards
 
-CrisisSim is built using a serverless AWS architecture.
+## Flood
 
-| AWS Service        | How CrisisSim Uses It                       |
-| ------------------ | ------------------------------------------- |
-| AWS Amplify        | Hosts and serves the React frontend         |
-| Amazon API Gateway | Exposes the REST API                        |
-| AWS Lambda         | Runs the Python backend and API handlers    |
-| Amazon DynamoDB    | Stores scenarios and simulation results     |
-| Amazon Bedrock     | Provides optional AI-generated explanations |
-| Amazon CloudWatch  | Lambda monitoring and logs                  |
-| AWS IAM            | Controls permissions between AWS resources  |
-
----
-
-# 🏗️ AWS Architecture
-
-```mermaid
-flowchart TD
-    A[Users<br/>Citizen / Authority] --> B[AWS Amplify<br/>React Frontend]
-    B -->|HTTPS| C[Amazon API Gateway<br/>REST API]
-    C --> D[AWS Lambda<br/>Python Backend]
-
-    D --> E[Simulation Engine]
-    D --> F[Amazon DynamoDB]
-    D --> G[Amazon Bedrock]
-
-    E --> E1[Risk Scoring]
-    E --> E2[Response Time]
-    E --> E3[Bottleneck Detection]
-    E --> E4[Interventions]
-    E --> E5[Recommendations]
-
-    D --> H[Amazon CloudWatch<br/>Logs & Monitoring]
-```
-
----
-
-# ✨ Key Features
-
-## 👤 Citizen Crisis Reporting
-
-Citizens can:
-
-* Select a hazard
-* Search for a real-world location
-* Set incident severity
-* Add a description
-* Submit a crisis report
-* Track report status
-
----
-
-## 🏢 Authority Command Center
-
-Authorities can:
-
-* View reported incidents
-* Inspect incident details
-* View incident locations
-* Update incident status
-* Assess incoming reports
-* Start a response simulation
-* Trace simulations back to incidents
-
----
-
-# 🔄 Incident Lifecycle
-
-```text
-Reported
-   |
-   v
-Acknowledged
-   |
-   v
-Assessing
-   |
-   v
-Response Dispatched
-   |
-   v
-Resolved
-```
-
----
-
-# 📍 Location-Aware Simulation
-
-CrisisSim uses real-world geography to position simulated emergency scenarios.
-
-The system generates deterministic simulated:
-
-* Risk zones
-* Facilities
-* Resources
-* Population impact
-* Hazard conditions
-
-### Real Geography + Simulated Conditions
-
-The selected location determines the geographic center of the scenario, while the surrounding emergency conditions and assets are generated by the simulation prototype.
-
-CrisisSim does **not** claim that generated zones, facilities, resources, hospitals, shelters, or emergency conditions represent live real-world data.
-
----
-
-# 🌍 Multi-Hazard Simulation
-
-| Hazard                 | Specialist Resources            |
-| ---------------------- | ------------------------------- |
-| 🌊 Flood               | Rescue teams, ambulances        |
-| 🔥 Fire                | Fire crews                      |
-| 🏚️ Earthquake         | Search & rescue teams           |
-| 🌀 Cyclone             | Evacuation teams, utility crews |
-| ☣️ Industrial Accident | Hazmat teams, containment units |
-
-Each hazard has its own factors and specialist response resources.
-
----
-
-# 📊 Risk & Bottleneck Analysis
-
-The simulation evaluates factors such as:
+Factors include:
 
 * Affected population
-* Hazard severity
+* Flood severity
 * Medical urgency
 * Road accessibility
 * Resource shortage
-* Hazard-specific conditions
 
-It produces:
+Specialist resources:
 
-* Simulated zone risk levels
-* Risk rankings
-* Response-time estimates
-* Resource bottlenecks
-* Recommended interventions
+* Rescue teams
+* Ambulances
 
 ---
 
-# 🔄 What-If Analysis
+## Fire
 
-Responders can compare:
+Factors include:
 
-* **Baseline**
-* **Resource Reallocation**
-* **Capacity Expansion**
-* **Combined Intervention**
+* Fire intensity
+* Smoke exposure
+* Spread potential
+
+Specialist resources:
+
+* Fire crews
+
+---
+
+## Earthquake
+
+Factors include:
+
+* Structural damage
+* Trapped-person likelihood
+* Aftershock risk
+
+Specialist resources:
+
+* Search and rescue teams
+
+---
+
+## Cyclone / Severe Storm
+
+Factors include:
+
+* Wind severity
+* Storm-surge exposure
+* Power-outage severity
+
+Specialist resources:
+
+* Evacuation teams
+* Utility crews
+
+---
+
+## Industrial Accident
+
+Factors include:
+
+* Toxic-release severity
+* Exposure level
+* Containment failure
+
+Specialist resources:
+
+* Hazmat teams
+* Containment units
+
+---
+
+# 4. Location-Aware Simulation
+
+CrisisSim accepts a real-world location entered by the user.
+
+For example:
 
 ```text
-Baseline
-   |
-   v
-Simulation Result
-   |
-   v
-Apply Strategy
-   |
-   +-----------------------+
-   |           |           |
-   v           v           v
-Reallocation  Capacity    Combined
-              Expansion
-   |           |           |
-   +-----------+-----------+
-               |
-               v
-       Projected Impact
+Bengaluru, Karnataka
+Mumbai, Maharashtra
+Bhopal, Madhya Pradesh
+Chennai, Tamil Nadu
+Delhi, India
 ```
 
-The comparison is based on the same simulation framework and existing model outputs rather than fabricated performance metrics.
+The application uses geocoding to identify the selected location and centers the map on that geography.
+
+The simulation then generates deterministic simulated emergency zones and facilities around that location.
+
+```text
+Real Location
+      |
+      v
+Geocoding
+      |
+      v
+Map Center
+      |
+      v
+Deterministic Simulated Zones
+      |
+      v
+Risk & Response Simulation
+```
+
+> The geography is real, but the emergency conditions, affected zones, facilities, and response conditions are simulated. CrisisSim does not claim that these represent actual current emergency conditions.
 
 ---
 
-# 🧠 Command Brief
+# 5. Citizen Reporting
 
-After a simulation, CrisisSim summarizes:
+Citizens can submit a crisis report containing:
+
+* Hazard type
+* Location
+* Latitude / longitude
+* Severity
+* Description
+* Optional evidence
+
+Example:
+
+```text
+Hazard: Fire
+Location: Bengaluru, Karnataka
+Severity: High
+Description: Smoke and fire reported near a commercial area.
+```
+
+Each report receives an incident ID such as:
+
+```text
+INC-2026-0001
+```
+
+Incident status follows a controlled workflow:
+
+```text
+reported
+    |
+    v
+acknowledged
+    |
+    v
+assessing
+    |
+    v
+response_dispatched
+    |
+    v
+resolved
+```
+
+Invalid status transitions are rejected by the backend.
+
+---
+
+# 6. Authority Command Center
+
+Emergency personnel can view submitted incidents through the authority command center.
+
+For each incident, the authority can:
+
+* View hazard information
+* View location
+* View severity
+* View description
+* View the incident on a map
+* Update incident status
+* Start a response simulation
+
+The incident can then be converted into a simulation scenario while preserving:
+
+* Hazard type
+* Location
+* Severity
+* Source incident ID
+
+This provides traceability between the original citizen report and the simulated response.
+
+---
+
+# 7. Simulation Engine
+
+The simulation engine is implemented as a pure Python module.
+
+The main stages are:
+
+```text
+Simulation State
+      |
+      v
+Risk Scoring
+      |
+      v
+Response Time Estimation
+      |
+      v
+Bottleneck Detection
+      |
+      v
+Intervention Engine
+      |
+      v
+Evaluation
+      |
+      v
+Recommendation
+```
+
+Major engine components include:
+
+```text
+backend/engine/
+
+models.py
+hazards.py
+risk_scorer.py
+response_time.py
+bottleneck_detector.py
+intervention_engine.py
+evaluator.py
+recommender.py
+```
+
+The engine is designed to be deterministic so that the same simulation inputs produce reproducible results.
+
+---
+
+# 8. What-If Analysis
+
+CrisisSim allows authorities to compare different intervention strategies.
+
+Current intervention types include:
+
+* Baseline
+* Resource Reallocation
+* Capacity Expansion
+* Combined Intervention
+
+The system compares the baseline scenario with the selected intervention and displays projected changes in existing simulation metrics.
+
+Example:
+
+```text
+BASELINE
+   |
+   | Risk / Response / Bottleneck
+   |
+   v
+INTERVENTION
+   |
+   | Risk / Response / Bottleneck
+   |
+   v
+PROJECTED IMPACT
+```
+
+The system does not claim that these projections represent real-world emergency outcomes.
+
+---
+
+# 9. Command Brief
+
+After a simulation, CrisisSim generates a concise command brief using existing simulation results.
+
+The brief can surface:
 
 * Hazard
 * Overall risk
@@ -316,171 +375,442 @@ After a simulation, CrisisSim summarizes:
 * Primary bottleneck
 * Estimated response time
 * Recommended intervention
-* Reason for recommendation
+* Reason for the recommendation
 
-The Command Brief is derived from simulation results.
+This gives the authority a quick summary before inspecting the detailed simulation results.
 
 ---
 
-# 🤖 AI-Assisted Explanation
+# 10. Risk Visualization
 
-The core emergency simulation is **not performed by an LLM**.
-
-The deterministic engine performs:
+The map visualizes simulated zones using risk levels:
 
 ```text
-Risk Scoring
-   |
-   v
-Response Time
-   |
-   v
-Bottleneck Detection
-   |
-   v
-Intervention Evaluation
-   |
-   v
-Recommendation
+CRITICAL  → High Risk
+HIGH      → Elevated Risk
+MEDIUM    → Medium Risk
+LOW       → Lower Risk
 ```
 
-Amazon Bedrock is then used as an optional explanation layer:
+The dashboard also displays simulated assets such as:
+
+* Emergency facilities
+* Resources
+* Simulated zones
+* Citizen incident locations
+
+The map includes a legend and explicit prototype disclaimers.
+
+---
+
+# 11. AI Explanation Layer
+
+CrisisSim includes an optional AI explanation layer using Amazon Bedrock.
+
+Bedrock is used for:
+
+> **Natural-language explanation of existing simulation results.**
+
+The AI layer does not calculate the simulation or determine the underlying risk scores.
+
+The architecture is:
 
 ```text
-Simulation Result
-       |
-       v
-Amazon Bedrock
-       |
-       v
+Simulation Engine
+      |
+      v
+Structured Simulation Result
+      |
+      v
+Bedrock Explanation Layer
+      |
+      v
 Natural-Language Explanation
 ```
 
-If Bedrock is unavailable, a deterministic fallback explanation is used.
+If Bedrock is unavailable or unauthorized, CrisisSim uses a deterministic fallback explanation.
 
-This separation ensures that the numerical simulation and decision calculations do not depend on an LLM.
+This ensures that the core application remains functional without depending on AI model availability.
 
----
-
-# 🏗️ System Architecture
-
-```mermaid
-flowchart TD
-    A[CRISISSIM APPLICATION]
-
-    B[User Interface<br/>React + TypeScript + Vite + Leaflet]
-    C[AWS Amplify<br/>Frontend Hosting]
-    D[Amazon API Gateway<br/>REST API]
-    E[AWS Lambda<br/>Python Backend]
-
-    F[Incident Handlers]
-    G[Scenario Handlers]
-    H[Simulation Handlers]
-    I[Explanation Handler]
-
-    J[Simulation Engine]
-    K[DynamoDB<br/>Persistence]
-    L[Amazon Bedrock<br/>Explanation]
-    M[CloudWatch<br/>Monitoring]
-    N[IAM<br/>Permissions]
-
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-
-    E --> F
-    E --> G
-    E --> H
-    E --> I
-
-    E --> J
-    E --> K
-    E --> L
-    E --> M
-    E --> N
-```
+> Bedrock is an explanation layer, not the simulation engine.
 
 ---
 
-# 🧮 Simulation Engine
+# 12. AWS Architecture
 
-The simulation engine is a separate Python module and does not depend on the frontend or LLM.
+CrisisSim is deployed as a serverless AWS application.
 
 ```text
-Scenario
-   |
-   v
-Risk Scoring
-   |
-   v
-Response-Time Estimation
-   |
-   v
-Bottleneck Detection
-   |
-   v
-Intervention Evaluation
-   |
-   v
-Strategy Recommendation
-   |
-   v
-Simulation Result
+                    +----------------+
+                    |  AWS Amplify   |
+                    |    Frontend    |
+                    +-------+--------+
+                            |
+                            v
+                    +---------------+
+                    | API Gateway   |
+                    | REST API      |
+                    +-------+-------+
+                            |
+                            v
+                    +---------------+
+                    | AWS Lambda    |
+                    | Python Backend |
+                    +-------+-------+
+                            |
+              +-------------+-------------+
+              |             |             |
+              v             v             v
+        +-----------+ +-----------+ +-------------+
+        | DynamoDB  | | DynamoDB  | |  Bedrock    |
+        | Scenarios | | Incidents | | Explanation |
+        +-----------+ +-----------+ +-------------+
+              |
+              v
+        +-----------+
+        | DynamoDB  |
+        | Results   |
+        +-----------+
+
+                    CloudWatch
+                        |
+                        v
+                 Lambda Monitoring
 ```
 
 ---
 
-# 🧩 Hazard-Specific Factors
+# 13. AWS Services Used
 
-## 🌊 Flood
+## AWS Amplify
 
-* Flood severity
-* Water velocity
-* Drainage failure
+Used to host and deploy the React frontend.
 
-## 🔥 Fire
-
-* Fire intensity
-* Smoke exposure
-* Spread potential
-
-## 🏚️ Earthquake
-
-* Structural damage
-* Trapped-person likelihood
-* Aftershock risk
-
-## 🌀 Cyclone
-
-* Wind severity
-* Storm-surge exposure
-* Power-outage severity
-
-## ☣️ Industrial Accident
-
-* Toxic-release severity
-* Exposure level
-* Containment failure
+The live application is deployed through an Amplify application and `main` branch.
 
 ---
 
-# 📁 Project Structure
+## Amazon API Gateway
+
+Provides the REST API entry point between the frontend and the serverless backend.
+
+Example API routes include:
+
+```text
+GET    /api/v1/health
+
+GET    /api/v1/scenarios
+GET    /api/v1/scenarios/{scenario_id}
+
+POST   /api/v1/simulate
+
+GET    /api/v1/results/{scenario_id}/latest
+
+POST   /api/v1/incidents
+GET    /api/v1/incidents
+GET    /api/v1/incidents/{incident_id}
+PATCH  /api/v1/incidents/{incident_id}
+
+POST   /api/v1/explain
+```
+
+---
+
+## AWS Lambda
+
+Runs the Python backend without requiring a continuously running server.
+
+Lambda handles:
+
+* Scenario retrieval
+* Incident creation
+* Incident retrieval
+* Incident status updates
+* Simulation requests
+* Simulation result retrieval
+* Explanation requests
+
+The deployed Lambda function is:
+
+```text
+crisissim-api-lambda
+```
+
+Runtime:
+
+```text
+Python 3.12
+```
+
+---
+
+## Amazon DynamoDB
+
+DynamoDB provides persistent storage for CrisisSim.
+
+### `crisissim-scenarios`
+
+Stores emergency scenarios.
+
+Primary key:
+
+```text
+scenario_id
+```
+
+### `crisissim-results`
+
+Stores simulation results.
+
+Primary key:
+
+```text
+scenario_id
+```
+
+Sort key:
+
+```text
+run_at
+```
+
+### `crisissim-incidents`
+
+Stores citizen-submitted crisis reports and their authority workflow status.
+
+Primary key:
+
+```text
+incident_id
+```
+
+Example item:
+
+```text
+incident_id   : INC-2026-0001
+hazard_type   : fire
+location_name : Bengaluru, Karnataka
+severity      : high
+status        : reported
+created_at    : ...
+```
+
+All three tables use:
+
+```text
+PAY_PER_REQUEST
+```
+
+billing.
+
+---
+
+## AWS IAM
+
+IAM controls permissions for the Lambda function.
+
+The Lambda role provides access required for:
+
+* DynamoDB
+* Bedrock
+* CloudWatch Logs
+
+The DynamoDB permissions are scoped to the CrisisSim tables.
+
+---
+
+## Amazon CloudWatch
+
+CloudWatch provides Lambda logging and monitoring.
+
+Application errors and backend execution information can be inspected through Lambda logs.
+
+---
+
+## Amazon Bedrock
+
+Bedrock provides the optional natural-language explanation layer.
+
+The simulation engine remains independent of Bedrock.
+
+---
+
+# 14. AWS Deployment
+
+The project includes an automated deployment script:
+
+```text
+backend/deploy_aws.py
+```
+
+Deployment command:
+
+```bash
+cd backend
+python deploy_aws.py --region us-east-1
+```
+
+The deployment script handles:
+
+```text
+1. DynamoDB table creation
+2. Scenario seeding
+3. IAM role configuration
+4. Lambda packaging
+5. Lambda deployment
+6. API Gateway deployment
+7. Frontend production build
+8. Amplify deployment
+```
+
+The deployment automatically creates:
+
+```text
+crisissim-scenarios
+crisissim-results
+crisissim-incidents
+```
+
+The frontend production API URL is configured automatically during deployment.
+
+---
+
+# 15. Current AWS Deployment
+
+Region:
+
+```text
+us-east-1
+```
+
+Lambda:
+
+```text
+crisissim-api-lambda
+```
+
+API Gateway:
+
+```text
+CrisisSimAPI
+```
+
+Amplify application:
+
+```text
+CrisisSim
+```
+
+Live application:
+
+[https://main.d2l4es46nt5jz1.amplifyapp.com](https://main.d2l4es46nt5jz1.amplifyapp.com)
+
+API base URL:
+
+[https://gvgtmkv58b.execute-api.us-east-1.amazonaws.com/prod/api/v1](https://gvgtmkv58b.execute-api.us-east-1.amazonaws.com/prod/api/v1)
+
+---
+
+# 16. System Architecture
+
+```text
+React + TypeScript
+        |
+        v
+   API Client
+        |
+        v
+API Gateway
+        |
+        v
+AWS Lambda
+        |
+        +-------------------+
+        |                   |
+        v                   v
+Incident Handlers     Simulation Handlers
+        |                   |
+        v                   v
+DynamoDB Incidents    Simulation Engine
+                            |
+                            v
+                     Risk Analysis
+                            |
+                            v
+                    Intervention Engine
+                            |
+                            v
+                     DynamoDB Results
+```
+
+The simulation engine is kept independent from the web/API layer.
+
+This makes it possible to:
+
+* Test the engine independently
+* Run simulations locally
+* Deploy the same engine through Lambda
+* Keep business logic separate from infrastructure code
+
+---
+
+# 17. Technology Stack
+
+## Frontend
+
+* React 18
+* TypeScript
+* Vite
+* React Router
+* Axios
+* Leaflet
+* React-Leaflet
+* OpenStreetMap
+
+## Backend
+
+* Python
+* FastAPI for local development
+* AWS Lambda for production
+* API Gateway
+* Boto3
+
+## Data
+
+* Amazon DynamoDB
+* In-memory store for local development
+
+## AI
+
+* Amazon Bedrock
+* Deterministic fallback explanation layer
+
+## Cloud
+
+* AWS Amplify
+* AWS API Gateway
+* AWS Lambda
+* Amazon DynamoDB
+* AWS IAM
+* Amazon CloudWatch
+* Amazon Bedrock
+
+## Development
+
+* Git
+* GitHub
+* VS Code
+* Pytest
+* npm
+
+---
+
+# 18. Project Structure
 
 ```text
 CrisisSim/
 |
-├── .kiro/
-|   └── specs/
-|       └── crisis-sim/
-|           ├── requirements.md
-|           ├── design.md
-|           └── tasks.md
-|
 ├── backend/
-|   |
-|   ├── bedrock/
-|   |   └── explainer.py
 |   |
 |   ├── engine/
 |   |   ├── models.py
@@ -493,314 +823,341 @@ CrisisSim/
 |   |   └── recommender.py
 |   |
 |   ├── handlers/
-|   |   ├── incidents.py
 |   |   ├── scenarios.py
 |   |   ├── simulation.py
+|   |   ├── incidents.py
 |   |   └── explanation.py
 |   |
 |   ├── persistence/
-|   |   ├── dynamodb.py
-|   |   └── memory_store.py
+|   |   ├── memory_store.py
+|   |   └── dynamodb.py
+|   |
+|   ├── bedrock/
+|   |   └── explainer.py
 |   |
 |   ├── tests/
+|   |
 |   ├── lambda_function.py
 |   ├── local_server.py
 |   ├── seed_data.py
-|   ├── deploy_aws.py
-|   └── requirements.txt
+|   └── deploy_aws.py
 |
 ├── frontend/
 |   |
-|   ├── public/
+|   ├── src/
+|   |   ├── components/
+|   |   ├── context/
+|   |   ├── pages/
+|   |   ├── services/
+|   |   ├── styles/
+|   |   ├── types/
+|   |   └── utils/
 |   |
-|   └── src/
-|       ├── components/
-|       ├── context/
-|       ├── pages/
-|       ├── services/
-|       ├── styles/
-|       ├── types/
-|       └── utils/
+|   └── package.json
 |
-├── .gitignore
-└── README.md
+├── .kiro/
+|   └── specs/
+|
+├── README.md
+└── .gitignore
 ```
 
 ---
 
-# 🚀 Running Locally
+# 19. Running Locally
 
-## Prerequisites
+## Backend
 
-Make sure you have:
-
-* Python 3.12+
-* Node.js
-* npm
-* Git
-
-## 1. Clone the Repository
-
-```bash
-git clone https://github.com/nidhica/CrisisSim.git
-cd CrisisSim
-```
-
-## 2. Start the Backend
+Navigate to the backend:
 
 ```bash
 cd backend
-pip install -r requirements.txt
-uvicorn local_server:app --reload --port 8000
 ```
 
-The local API will run at:
-
-```text
-http://localhost:8000
-```
-
-## 3. Start the Frontend
-
-Open another terminal:
+Install dependencies:
 
 ```bash
-cd frontend
-npm install
-npm run dev
+pip install -r requirements.txt
 ```
 
-Open the local URL displayed by Vite.
+Run the local API:
+
+```bash
+python local_server.py
+```
+
+The local backend uses the in-memory persistence implementation unless configured otherwise.
 
 ---
 
-# 🧪 Testing
+## Frontend
 
-## Backend Tests
-
-From the `backend` directory:
+Navigate to the frontend:
 
 ```bash
-pytest
+cd frontend
 ```
 
-The backend test suite covers:
-
-* Risk scoring
-* Response-time calculations
-* Bottleneck detection
-* Intervention logic
-* Recommendations
-* Multi-hazard behavior
-* Incident APIs
-* Lambda handlers
-
-## Frontend Tests
-
-From the `frontend` directory:
+Install dependencies:
 
 ```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The frontend can then be accessed through the Vite development URL.
+
+---
+
+# 20. Testing
+
+Backend tests:
+
+```bash
+cd backend
+pytest -q
+```
+
+Frontend tests:
+
+```bash
+cd frontend
 npm test
 ```
 
-The frontend test suite covers:
-
-* Citizen reporting
-* Incident workflows
-* Simulation creation
-* Location handling
-* Map behavior
-* Risk visualization
-* Command Brief
-* Projected Impact
-* What-If analysis
-
-## Production Build
-
-From the `frontend` directory:
+Production frontend build:
 
 ```bash
 npm run build
 ```
 
----
-
-# ☁️ AWS Deployment
-
-CrisisSim uses a serverless AWS deployment.
-
-The deployment tooling is located at:
+The final implementation was validated with:
 
 ```text
-backend/deploy_aws.py
+Backend tests:   151 passed
+Frontend tests:  64/64 passed
+Frontend build:  successful
 ```
-
-The deployment flow is:
-
-```text
-React Frontend
-      |
-      v
-AWS Amplify
-      |
-      v
-Amazon API Gateway
-      |
-      v
-AWS Lambda
-      |
-      +----> Simulation Engine
-      |
-      +----> DynamoDB
-      |
-      +----> Bedrock Explanation Layer
-```
-
-The deployed architecture uses:
-
-* AWS Amplify for frontend hosting
-* Amazon API Gateway for the REST API
-* AWS Lambda for backend execution
-* Amazon DynamoDB for persistence
-* Amazon Bedrock for optional explanation
-* Amazon CloudWatch for logs and monitoring
-* AWS IAM for permissions
-
-> 🔐 **Security:** AWS credentials, access keys, private keys, environment secrets, and other sensitive configuration must never be committed to the repository.
 
 ---
 
-# ⚠️ Prototype Limitations
+# 21. Prototype Limitations
 
-CrisisSim is an **emergency simulation and decision-support prototype**.
+CrisisSim is intentionally a simulation prototype.
 
-It should not be interpreted as a production emergency-management or disaster-prediction system.
+The following limitations apply:
 
-## Simulated Conditions
+### Not real-time emergency intelligence
 
-The following are simulated or generated by the platform:
+The platform does not consume live disaster feeds or emergency-service data.
 
-* Hazard conditions
-* Risk zones
-* Facilities
-* Resource availability
-* Population impact
-* Response-time estimates
+### Simulated zones
+
+Map zones and simulated facilities are generated deterministically around the selected location.
+
+They should not be interpreted as actual hazard boundaries or verified emergency facilities.
+
+### Prototype coefficients
+
+Risk weights and response modifiers are transparent prototype assumptions.
+
+They have not been presented as validated emergency-science models.
+
+### No operational control
+
+CrisisSim does not control:
+
+* Emergency vehicles
+* Hospitals
+* Fire departments
+* Police systems
+* Shelters
+* Utility infrastructure
+
+### No emergency guarantees
+
+Simulation outputs are hypothetical projections and should not be treated as guaranteed real-world outcomes.
+
+### AI limitations
+
+Amazon Bedrock is used only for explanation.
+
+The deterministic simulation engine remains responsible for the actual calculations.
+
+If Bedrock is unavailable, the system uses a deterministic fallback explanation.
+
+---
+
+# 22. Design Principles
+
+CrisisSim follows several architectural principles.
+
+## Deterministic simulation
+
+The simulation engine produces reproducible outputs from the same inputs.
+
+## Transparent assumptions
+
+Risk factors and intervention logic are explicit rather than hidden inside an AI model.
+
+## AI as an explanation layer
+
+AI is used to communicate simulation results rather than replace the underlying decision logic.
+
+## Separation of concerns
+
+The architecture separates:
+
+```text
+Frontend
+    |
+API
+    |
+Handlers
+    |
+Simulation Engine
+    |
+Persistence
+```
+
+## Hazard-aware resources
+
+Specialist resources are associated with the relevant hazard rather than being freely transferred between unrelated response domains.
+
+## Traceability
+
+Citizen incidents can be connected to the simulations created from them.
+
+---
+
+# 23. Why CrisisSim
+
+Emergency response involves decisions under uncertainty.
+
+CrisisSim explores how simulation can provide an intermediate step between:
+
+```text
+Incident
+   ↓
+Assessment
+   ↓
+Simulation
+   ↓
+Comparison
+   ↓
+Decision
+```
+
+Instead of presenting a single opaque recommendation, the platform exposes:
+
+* Risk
+* Response time
 * Bottlenecks
-* Intervention outcomes
+* Resources
+* Intervention options
+* Projected impact
 
-Real-world geography can be selected through location search, but the emergency conditions surrounding that location are simulated.
-
-## Deterministic Simulation
-
-The core simulation uses transparent deterministic coefficients and assumptions.
-
-These assumptions are intended to demonstrate the decision-support workflow and have not been presented as validated emergency-response models.
-
-Simulation outputs should therefore be interpreted as **prototype results**, rather than real-world predictions.
-
-## AI Limitations
-
-Amazon Bedrock is used as an explanation layer.
-
-The core simulation calculations are performed by the deterministic simulation engine.
-
-Bedrock does not determine:
-
-* Risk scores
-* Response times
-* Bottlenecks
-* Resource allocations
-* Intervention outcomes
-
-If Bedrock is unavailable, CrisisSim uses a deterministic fallback explanation.
-
-## Operational Limitations
-
-CrisisSim currently does not:
-
-* Provide real-time disaster intelligence
-* Connect to emergency dispatch systems
-* Predict actual disasters
-* Represent live hospital or shelter availability
-* Issue real emergency alerts
-* Replace trained emergency personnel
-* Provide validated operational emergency instructions
-
-> **CrisisSim should not be used to make real emergency-response decisions.**
+This makes the prototype focused on **decision support and explainability**, rather than simply producing an AI-generated answer.
 
 ---
 
-# 🎯 Why CrisisSim?
+# 24. Project Status
 
-CrisisSim focuses on the gap between:
+CrisisSim is currently deployed on AWS.
 
-> **Knowing that an incident occurred**
-
-and:
-
-> **Exploring how different response strategies could affect a simulated scenario.**
-
-The complete workflow is:
+The production deployment includes:
 
 ```text
-REPORT
-  |
-  v
-ASSESS
-  |
-  v
-SIMULATE
-  |
-  v
-ANALYZE
-  |
-  v
-COMPARE
-  |
-  v
-DECIDE
+✓ Multi-hazard simulation
+✓ Location-aware scenarios
+✓ Citizen crisis reporting
+✓ Authority incident command center
+✓ Incident status workflow
+✓ Incident persistence in DynamoDB
+✓ Response simulation from incidents
+✓ Risk visualization
+✓ Bottleneck detection
+✓ Intervention comparison
+✓ What-If analysis
+✓ Command Brief
+✓ Projected Impact
+✓ Amazon Bedrock explanation layer
+✓ Deterministic fallback explanation
+✓ AWS Amplify deployment
+✓ API Gateway
+✓ AWS Lambda
+✓ DynamoDB persistence
+✓ IAM configuration
+✓ CloudWatch-compatible Lambda logging
 ```
 
-This creates a unified workflow for exploring emergency-response scenarios across multiple hazard types.
-
 ---
 
-# 📌 Project Status
+# 25. Repository
 
-CrisisSim currently demonstrates:
+GitHub:
 
-* ✅ Multi-hazard emergency simulation
-* ✅ Citizen crisis reporting
-* ✅ Authority incident management
-* ✅ Location-aware scenarios
-* ✅ Risk analysis
-* ✅ Bottleneck detection
-* ✅ Response strategy comparison
-* ✅ What-If analysis
-* ✅ Projected impact analysis
-* ✅ Command Brief
-* ✅ AWS serverless architecture
-* ✅ DynamoDB persistence for scenarios and simulation results
-* ✅ Optional Bedrock explanation
-* ✅ Backend testing
-* ✅ Frontend testing
-
----
-
-# 🔗 Repository
-
-**GitHub:**
 [https://github.com/nidhica/CrisisSim](https://github.com/nidhica/CrisisSim)
 
 ---
 
-# ⚖️ Disclaimer
+# 26. Demo
 
-CrisisSim is a prototype created for demonstrating emergency simulation and decision-support concepts.
+The demonstration focuses on the complete workflow:
 
-All simulated emergency conditions, resources, facilities, risk zones, response times, and response outcomes are intended for demonstration purposes only.
+```text
+1. Citizen reports a crisis
+2. Incident appears in the authority command center
+3. Authority acknowledges and assesses it
+4. Authority launches a response simulation
+5. CrisisSim generates simulated risk zones
+6. Response bottlenecks are identified
+7. Intervention strategies are compared
+8. Projected impact is displayed
+9. Command Brief summarizes the result
+10. AWS services supporting the workflow are shown
+```
 
-The platform does not represent live emergency conditions and should not be used as a substitute for trained emergency personnel, official emergency systems, or validated emergency-response models.
+---
 
-````
+# 27. AWS Feedback
+
+Building CrisisSim on AWS made it possible to deploy the application as a serverless architecture without managing traditional backend servers.
+
+The combination of:
+
+```text
+Amplify
+   +
+API Gateway
+   +
+Lambda
+   +
+DynamoDB
+```
+
+provided a straightforward way to connect the frontend, backend APIs, simulation engine, and persistent data.
+
+One of the challenges during development was configuring cloud permissions and service access, particularly around Amazon Bedrock.
+
+The architecture allowed the AI explanation layer to remain optional, while the deterministic simulation engine continued to operate independently.
+
+This separation helped keep the application functional even when AI model access was unavailable.
+
+---
+
+# 28. Disclaimer
+
+CrisisSim is an academic and hackathon prototype created to demonstrate AI-assisted simulation and decision-support concepts.
+
+It is not intended for real-world emergency management, public safety operations, medical decisions, disaster response coordination, or infrastructure control.
+
+All simulated emergency conditions, risk scores, response estimates, facilities, resources, and recommendations should be treated as hypothetical outputs generated from prototype assumptions.
+
+Real emergency decisions should rely on qualified authorities, verified data, established emergency procedures, and appropriate professional systems.
+
